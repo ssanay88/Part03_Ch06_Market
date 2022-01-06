@@ -5,8 +5,9 @@
       <map>
         <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/drawable/selector_menu_color.xml" value="0.290625" />
         <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/layout/activity_main.xml" value="0.38787023977433005" />
+        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/layout/activity_product_add.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/layout/fragment_chatlist.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/layout/fragment_home.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/layout/fragment_mypage.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/layout/item_product.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ppllo/AndroidStudioProjects/Part03_Ch06_Market/app/src/main/res/menu/bottom_navigaion_menu.xml" value="0.27447916666666666" />
