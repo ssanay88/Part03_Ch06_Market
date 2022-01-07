@@ -7,8 +7,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.part03_ch06_market.AddProductActivity
+import com.example.part03_ch06_market.DBKey.Companion.CHILD_CHAT
 import com.example.part03_ch06_market.DBKey.Companion.DB_PRODUCTS
+import com.example.part03_ch06_market.DBKey.Companion.DB_USERS
 import com.example.part03_ch06_market.R
+import com.example.part03_ch06_market.chatList.ChatListModel
 import com.example.part03_ch06_market.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +29,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
     private lateinit var adapter: ProductAdapter
     private lateinit var productDB:DatabaseReference
+    private lateinit var userDB:DatabaseReference
 
     private val productList = mutableListOf<ProductModel>()
 
@@ -64,9 +68,46 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         val fragmentHomeBinding = FragmentHomeBinding.bind(view)
         binding = fragmentHomeBinding
 
-        adapter = ProductAdapter()
+        adapter = ProductAdapter(onItemClicked = { productModel ->
+            if (auth.currentUser != null) {
+                if (auth.currentUser!!.uid != productModel.sellerId) {
+
+                    // TODO 채팅방 생성성
+                    val chatRoom = ChatListModel(
+                        buyerId = auth.currentUser!!.uid,
+                        sellerId = productModel.sellerId,
+                        itemTitle = productModel.title,
+                        key = System.currentTimeMillis()
+                    )
+
+                    // 구매자의 DB의 Chat에 채팅 정보를 추가
+                    userDB.child(auth.currentUser!!.uid)
+                        .child(CHILD_CHAT)
+                        .push()
+                        .setValue(chatRoom)
+
+                    // 판매자의 DB의 Chat에 채팅 정보를 추가
+                    userDB.child(productModel.sellerId)
+                        .child(CHILD_CHAT)
+                        .push()
+                        .setValue(chatRoom)
+
+                    Snackbar.make(view, "채팅방이 생성되었습니다. 채팅탭에서 확인해주세요.",Snackbar.LENGTH_LONG).show()
+
+                } else {
+                    // 내가 올린 제품일 경우
+                    Snackbar.make(view, "내가 올린 제품입니다.",Snackbar.LENGTH_LONG).show()
+                }
+            } else {
+                // 로그인을 안한 상태일 경우
+                Snackbar.make(view, "로그인 후 사용해주세요",Snackbar.LENGTH_LONG).show()
+            }
+
+
+        })
 
         productDB = Firebase.database.reference.child(DB_PRODUCTS)
+        userDB = Firebase.database.reference.child(DB_USERS)
 
 
         // 리사이클러뷰 설정
@@ -76,12 +117,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
         fragmentHomeBinding.addFloatingBtn.setOnClickListener {
 
-//            if (auth.currentUser != null) {
+            if (auth.currentUser != null) {
                 val intent = Intent(requireContext(), AddProductActivity::class.java)
                 startActivity(intent)
-//            } else {
-//                Snackbar.make(view, "로그인 후 사용해주세요",Snackbar.LENGTH_LONG).show()
-//            }
+            } else {
+                Snackbar.make(view, "로그인 후 사용해주세요",Snackbar.LENGTH_LONG).show()
+            }
 
 
         }

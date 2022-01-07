@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.part03_ch06_market.databinding.ItemProductBinding
 import java.util.*
 
-class ProductAdapter: ListAdapter<ProductModel,ProductAdapter.ViewHolder>(diffUtill) {
+class ProductAdapter(val onItemClicked: (ProductModel) -> Unit): ListAdapter<ProductModel,ProductAdapter.ViewHolder>(diffUtill) {
 
     inner class ViewHolder(private val binding: ItemProductBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -27,6 +27,12 @@ class ProductAdapter: ListAdapter<ProductModel,ProductAdapter.ViewHolder>(diffUt
                 Glide.with(binding.thumbnailImageView)
                     .load(productModel.imageUrl)
                     .into(binding.thumbnailImageView)
+            }
+
+            // root -> 아이템 모든 부위 중 아무곳이나 눌렀을 경우
+            // onItemClicked 실행 , 메서드 구현은 HomeFragment에서 람다 함수로 구현
+            binding.root.setOnClickListener {
+                onItemClicked(productModel)
             }
 
         }
