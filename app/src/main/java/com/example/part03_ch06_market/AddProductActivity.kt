@@ -31,6 +31,7 @@ class AddProductActivity : AppCompatActivity() {
         Firebase.auth
     }
     // Firebase 저장소 인스턴스
+    // mp3파일나 text, image파일 등을 저장할 수 있는 저장소
     private val storage: FirebaseStorage by lazy {
         Firebase.storage
     }

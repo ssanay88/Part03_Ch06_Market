@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.part03_ch06_market.databinding.ItemProductBinding
 import java.util.*
 
+// productModel : 제품 데이터 모델
 class ProductAdapter(val onItemClicked: (ProductModel) -> Unit): ListAdapter<ProductModel,ProductAdapter.ViewHolder>(diffUtill) {
 
     inner class ViewHolder(private val binding: ItemProductBinding): RecyclerView.ViewHolder(binding.root) {
